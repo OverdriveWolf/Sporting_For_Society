@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Event;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -9,7 +11,7 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = \App\Models\Category::all();
+        $categories = Category::all();
 
         $query = Event::with(['organizer', 'category', 'participants']);
 
@@ -34,14 +36,17 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        
-
-        $event->load(['organizer', 'participants']);
+        $event->load(['organizer', 'category', 'participants']);
         return view('events.show', compact('event'));
     }
+
+    /**
+     * Show form to create a new event.
+     */
     public function create()
     {
-        return view('events.create');
+        $categories = Category::all();
+        return view('events.create', compact('categories'));
     }
 
     /**
@@ -51,44 +56,38 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'sport' => 'required|string',
-            'location' => 'required|string|max:255',
-            'start_time' => 'required|date|after:now',
-            'max_athletes' => 'required|integer|min:2|max:100',
-            'description' => 'required|string|min:10',
+            'title' => ['required', 'string', 'max:255'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'max_participants' => ['required', 'integer', 'min:2', 'max:100'],
+            'event_date' => ['required', 'date', 'after:now'],
+            'location' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'min:5'],
         ]);
 
-        // Attach authenticated user as event host/organizer (REQ-09)
-        $validated['user_id'] = Auth::id();
-        $validated['status'] = 'active';
+        // Uses organizedEvents() relationship on User model
+        $request->user()->organizedEvents()->create($validated);
 
-        Event::create($validated);
-
-        return redirect()->route('events.index')
-            ->with('success', 'Sports event created successfully!');
+        return redirect()->route('events.index')->with('success', 'Event created successfully!');
     }
-
 
     public function toggleRegistration(Event $event)
     {
         $user = Auth::user();
 
-        // Check if user is already registered
-        if ($event->participants->contains($user->id)) {
+        // 1. If user is already registered, allow them to cancel
+        if ($event->participants()->where('user_id', $user->id)->exists()) {
             $event->participants()->detach($user->id);
-            $message = 'You have successfully unregistered from this event.';
-        } else {
-            // Check capacity limit
-            if ($event->participants()->count() >= $event->max_athletes) {
-                return back()->with('error', 'This event is already full.');
-            }
-
-            $event->participants()->attach($user->id);
-            $message = 'You are registered for ' . $event->title . '!';
+            return back()->with('success', 'You have successfully cancelled your registration.');
         }
 
-        return back()->with('success', $message);
+        // 2. Prevent sign-up if the event has reached max capacity
+        if ($event->isFull()) {
+            return back()->with('error', 'Sorry, this event is already full.');
+        }
+
+        // 3. Attach user to the event pivot table
+        $event->participants()->attach($user->id);
+
+        return back()->with('success', 'You are now registered for this event!');
     }
 }
-

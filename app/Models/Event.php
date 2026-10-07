@@ -24,6 +24,7 @@ class Event extends Model
      */
     protected $casts = [
         'event_date' => 'datetime',
+        'max_participants ' => 'integer',
     ];
 
     public function organizer()
@@ -39,7 +40,15 @@ class Event extends Model
     public function participants()
     {
         return $this->belongsToMany(User::class)
-                    ->withPivot('status', 'registered_at')
-                    ->withTimestamps();
+            ->withPivot('status', 'registered_at')
+            ->withTimestamps();
+    }
+    public function isFull(): bool
+    {
+        if (!$this->max_participants) {
+            return false;
+        }
+
+        return $this->participants()->count() >= (int) $this->max_participants;
     }
 }

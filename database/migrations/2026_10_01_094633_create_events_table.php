@@ -14,7 +14,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('location');
             $table->dateTime('event_date');
-            $table->unsignedInteger('max_participants')->default(0);
+            $table->unsignedInteger('max_participants')->default(10);
             $table->foreignId('organizer_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();

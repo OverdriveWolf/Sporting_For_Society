@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -33,6 +32,21 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function isOrganizer(): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+
+        return strtolower($this->role->name) === 'organizer';
+    }
+
+    // Alias for controller method $user->events()
+    public function events()
+    {
+        return $this->organizedEvents();
+    }
+
     // Events organized by this user
     public function organizedEvents()
     {
@@ -43,8 +57,8 @@ class User extends Authenticatable
     public function registeredEvents()
     {
         return $this->belongsToMany(Event::class, 'event_user')
-                    ->withPivot('status', 'registered_at')
-                    ->withTimestamps();
+            ->withPivot('status', 'registered_at')
+            ->withTimestamps();
     }
 
     public function feedbacks()

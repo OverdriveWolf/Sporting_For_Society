@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,6 +21,23 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
+    }
+
+
+    public function makeOrganizer(Request $request)
+    {
+        // Search using lowercase or case-insensitive query
+        $organizerRole = Role::whereRaw('LOWER(name) = ?', ['organizer'])->first();
+
+        if ($organizerRole) {
+            $request->user()->update([
+                'role_id' => $organizerRole->id,
+            ]);
+
+            return back()->with('success', 'You are now an Event Organizer! You can now create new events.');
+        }
+
+        return back()->with('error', 'Organizer role could not be found.');
     }
 
     /**
