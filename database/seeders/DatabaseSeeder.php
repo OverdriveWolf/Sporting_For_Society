@@ -2,24 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
+use App\Models\Category;
+
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Seed default roles
+        foreach (['Member', 'Organizer', 'Admin'] as $roleName) {
+            Role::firstOrCreate(['name' => $roleName]);
+        }
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Seed default categories
+        foreach (['Football', 'Running', 'Tennis', 'Basketball', 'Cycling', 'Swimming'] as $categoryName) {
+            Category::firstOrCreate(['name' => $categoryName]);
+        }
+        
     }
 }
