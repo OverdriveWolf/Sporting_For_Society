@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('location');
             $table->dateTime('event_date');
             $table->unsignedInteger('max_participants')->default(10);
+            $table->string('status')->default('Active'); // Active, Cancelled, Completed
             $table->foreignId('organizer_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();

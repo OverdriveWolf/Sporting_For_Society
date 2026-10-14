@@ -10,20 +10,26 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
+        // Store previous page URL in session if not coming from auth routes
+        if (!session()->has('url.intended') && url()->previous() !== route('login')) {
+            session(['url.intended' => url()->previous()]);
+        }
+
         return view('auth.login');
     }
 
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard');
+            // Redirect to intended route, falling back to homepage or events route
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([

@@ -17,6 +17,7 @@ class Event extends Model
         'location',
         'event_date',
         'max_participants',
+        'status',
     ];
 
     /**
@@ -24,7 +25,7 @@ class Event extends Model
      */
     protected $casts = [
         'event_date' => 'datetime',
-        'max_participants ' => 'integer',
+        'max_participants' => 'integer',
     ];
 
     public function organizer()

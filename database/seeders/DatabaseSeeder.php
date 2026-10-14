@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\Category;
 
-
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
@@ -20,6 +19,8 @@ class DatabaseSeeder extends Seeder
         foreach (['Football', 'Running', 'Tennis', 'Basketball', 'Cycling', 'Swimming'] as $categoryName) {
             Category::firstOrCreate(['name' => $categoryName]);
         }
-        
+
+        // Call the EventSeeder correctly
+        $this->call(EventSeeder::class);
     }
 }

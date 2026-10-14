@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordController;
-
+use App\Http\Controllers\OrganizerDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,21 +36,33 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    
-
-    Route::middleware('auth')->group(function () {
-        Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+    // Organizer Dedicated Management Panel
+    Route::prefix('organizer')->name('organizer.')->group(function () {
+        Route::get('/dashboard', [OrganizerDashboardController::class, 'index'])->name('dashboard');
     });
 
+    // Security & Password Updates
+    Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+
+    // Dashboard Redirection
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return redirect()->intended('/');
     })->name('dashboard');
 
-    // Profile Management
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/become-organizer', [ProfileController::class, 'makeOrganizer'])->name('profile.become-organizer');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile.index');
+
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::post('/profile/become-organizer', [ProfileController::class, 'makeOrganizer'])
+        ->name('profile.become-organizer');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 
     // Event Participation (REQ-03)
     Route::post('/events/{event}/register', [EventController::class, 'toggleRegistration'])
@@ -64,6 +76,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware('organizer')->group(function () {
         Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
         Route::post('/events', [EventController::class, 'store'])->name('events.store');
+        Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+        Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+        Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     });
 });
 

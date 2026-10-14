@@ -83,6 +83,18 @@ class EventSeeder extends Seeder
             'category_id'      => $basketballCategory->id,
         ]);
 
+        $event4 = Event::create([
+            'title'            => 'Sunday Morning 5K Fun Run',
+            'description'      => 'Join us for a scenic 5K run along the waterfront. All paces welcome!',
+            'location'         => 'Brooklyn Bridge Park, Pier 1',
+            'event_date'       => now()->addDays(6)->setHour(8)->setMinute(30),
+            'max_participants' => 50,
+            'organizer_id'     => $organizer->id,
+            'category_id'      => $runningCategory->id,
+        ]);
+
+        
+
         // 6. Seed event_user pivot table with initial registrations
         $event1->participants()->attach($participant1->id, [
             'status'        => 'Registered',
