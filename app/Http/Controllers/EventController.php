@@ -46,13 +46,24 @@ class EventController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('events.create', compact('categories'));
-    }
 
-    /**
-     * Store a newly created event in SQLite database.
-     * Fulfills REQ-04, REQ-05 & REQ-10 (CRUD, Persistence, Form Validation)
-     */
+        // Fetch managed events for the dashboard sidebar/table included in this view
+        $managedEvents = auth()->user()->organizedEvents()
+            ->with('category')
+            ->withCount('participants')
+            ->latest('event_date')
+            ->get();
+
+        $totalEvents = $managedEvents->count();
+        $activeParticipants = $managedEvents->sum('participants_count');
+
+        return view('events.create', compact(
+            'categories',
+            'managedEvents',
+            'totalEvents',
+            'activeParticipants'
+        ));
+    }
     public function store(Request $request)
     {
         $validated = $request->validate([

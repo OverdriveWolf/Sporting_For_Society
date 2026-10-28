@@ -15,6 +15,9 @@ use App\Http\Controllers\OrganizerDashboardController;
 */
 Route::get('/', [EventController::class, 'index'])->name('events.index');
 
+Route::get('/homepage', function () {
+    return view('homepage.index');
+})->name('homepage.index');
 /*
 |--------------------------------------------------------------------------
 | Guest-Only Routes
@@ -24,7 +27,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
 
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::get('/login', [LoginController::class, 'showRegistrationForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 });
 

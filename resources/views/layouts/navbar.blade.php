@@ -4,7 +4,7 @@
 
             <!-- Left: Lime Icon + SPORT FOR SOCIETY Title -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="{{ route('events.index') }}" class="flex items-center" style="gap: 0.75rem;">
+                <a href="{{ route('homepage.index') }}" class="flex items-center" style="gap: 0.75rem;">
                     <!-- Lime Icon Box -->
                     <div style="background-color: #CCFF00; min-width: 36px; min-height: 36px;"
                         class="p-2 rounded-lg flex items-center justify-center font-bold flex-shrink-0">
@@ -18,7 +18,20 @@
                     </span>
                 </a>
             </div>
-
+            <button @click="darkMode = !darkMode"
+                class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none transition-colors">
+                <!-- Sun icon (Visible in Dark Mode) -->
+                <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                    </path>
+                </svg>
+                <!-- Moon icon (Visible in Light Mode) -->
+                <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                </svg>
+            </button>
             <!-- Middle Navigation Links with Explicit Inline Gaps -->
             <div class="flex items-center" style="gap: 2rem;">
                 @auth
@@ -41,7 +54,7 @@
                         style="{{ request()->routeIs('profile.*') ? 'color: #CCFF00; font-weight: 700;' : 'color: #d1d5db;' }}">
                         My Profile
                     </a>
-                    
+
                 @else
                     <a href="{{ route('events.index') }}" class="text-sm font-medium transition-colors whitespace-nowrap"
                         style="{{ request()->routeIs('events.*') || request()->is('/') ? 'color: #CCFF00; font-weight: 700;' : 'color: #d1d5db;' }}">
@@ -74,14 +87,14 @@
                         </svg>
                     </button>
 
-                    <!-- Search Input Field -->
-                    <div class="relative flex-shrink-0">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <!-- Search Input Field with Properly Styled Icon -->
+                    <div class="relative flex-shrink-0 flex items-center">
+                        <span class="absolute left-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
-                        </div>
+                        </span>
                         <input type="text" placeholder="Search..."
                             style="background-color: #111827 !important; color: #e5e7eb !important; border: 1px solid #1f2937 !important; outline: none !important; border-radius: 8px !important; padding-left: 2.25rem !important; padding-right: 1rem !important; padding-top: 0.375rem !important; padding-bottom: 0.375rem !important; width: 160px !important;"
                             class="text-sm appearance-none">
@@ -89,7 +102,7 @@
 
                     <!-- User Profile Avatar & Logout Link -->
                     <div class="flex items-center flex-shrink-0" style="gap: 0.75rem;">
-                        <a href="{{ route('profile.edit') }}" class="block flex-shrink-0">
+                        <a href="{{ route('profile.index') }}" class="block flex-shrink-0">
                             @if(auth()->user()->avatar)
                                 <img class="h-9 w-9 rounded-full object-cover border border-gray-700 flex-shrink-0"
                                     style="width: 36px !important; height: 36px !important;"
