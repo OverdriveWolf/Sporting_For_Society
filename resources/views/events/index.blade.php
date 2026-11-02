@@ -154,25 +154,24 @@
                         style="font-family: 'Impact', 'Arial Black', sans-serif; margin: 0 0 0.85rem 0; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase;">
                         UPCOMING MY EVENTS
                     </h4>
-
-                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                        <div :style="darkMode ? 'border-bottom-color: #1f2937;' : 'border-bottom-color: #f1f5f9;'"
-                            style="display: flex; align-items: center; gap: 0.6rem; padding-bottom: 0.6rem; border-bottom-width: 1px; border-bottom-style: solid;">
+                    <br>
+                    <div style="display: flex; align-items: center; gap: 0.6rem;">
                             <div style="width: 32px; height: 32px; background: #334155; border-radius: 6px; flex-shrink: 0;">
                             </div>
                             <div>
+                           
                                 <div :style="darkMode ? 'color: #ffffff;' : 'color: #0f172a;'" style="font-size: 0.75rem; font-weight: 800;">Weekend Clay Singles</div>
                                 <div style="font-size: 0.675rem; color: #64748b;">Today, 6:00 PM</div>
                             </div>
                         </div>
-
+                        <br>
                         <div style="display: flex; align-items: center; gap: 0.6rem;">
                             <div style="width: 32px; height: 32px; background: #334155; border-radius: 6px; flex-shrink: 0;">
                             </div>
                             <div>
                                 <div :style="darkMode ? 'color: #ffffff;' : 'color: #0f172a;'" style="font-size: 0.75rem; font-weight: 800;">Metro Elite League Match
                                 </div>
-                                <div style="font-size: 0.675rem; color: #64748b;">Aug 28, 8:00 PM</div>
+                                <div style="font-size: 0.675rem; color: #64748b;">Oct 31, 8:00 PM</div>
                             </div>
                         </div>
                     </div>

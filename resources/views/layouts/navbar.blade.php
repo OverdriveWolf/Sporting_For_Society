@@ -1,10 +1,11 @@
-<nav style="background-color: #000000 !important; color: #ffffff;" class="border-b border-gray-800 sticky top-0 z-50">
+<nav style="background-color: #000000 !important; color: #ffffff;" class="border-b border-gray-800 sticky top-0 z-50"
+    x-data="{ open: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center" style="gap: 1.5rem;">
 
             <!-- Left: Lime Icon + SPORT FOR SOCIETY Title -->
-            <div class="flex-shrink-0 flex items-center">
-                <a href="{{ route('homepage.index') }}" class="flex items-center" style="gap: 0.75rem;">
+            <div class="flex-shrink-0 flex items-center min-w-0 pr-2">
+                <a href="{{ route('homepage.index') }}" class="flex items-center min-w-0" style="gap: 0.75rem;">
                     <!-- Lime Icon Box -->
                     <div style="background-color: #CCFF00; min-width: 36px; min-height: 36px;"
                         class="p-2 rounded-lg flex items-center justify-center font-bold flex-shrink-0">
@@ -13,27 +14,15 @@
                         </svg>
                     </div>
                     <!-- Bold White Title -->
-                    <span class="font-extrabold text-xl tracking-tight text-white uppercase italic whitespace-nowrap">
+                    <span
+                        class="font-extrabold text-sm sm:text-xl tracking-tight text-white uppercase italic truncate whitespace-nowrap">
                         SPORT FOR SOCIETY
                     </span>
                 </a>
             </div>
-            <button @click="darkMode = !darkMode"
-                class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none transition-colors">
-                <!-- Sun icon (Visible in Dark Mode) -->
-                <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                    </path>
-                </svg>
-                <!-- Moon icon (Visible in Light Mode) -->
-                <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                </svg>
-            </button>
-            <!-- Middle Navigation Links with Explicit Inline Gaps -->
-            <div class="flex items-center" style="gap: 2rem;">
+
+            <!-- Middle Navigation Links (Hidden on Mobile/Tablet, visible on Laptop/PC) -->
+            <div class="hidden lg:flex items-center" style="gap: 2rem;">
                 @auth
                     @if(auth()->user()->isOrganizer())
                         <a href="{{ route('organizer.dashboard') }}"
@@ -54,7 +43,6 @@
                         style="{{ request()->routeIs('profile.*') ? 'color: #CCFF00; font-weight: 700;' : 'color: #d1d5db;' }}">
                         My Profile
                     </a>
-
                 @else
                     <a href="{{ route('events.index') }}" class="text-sm font-medium transition-colors whitespace-nowrap"
                         style="{{ request()->routeIs('events.*') || request()->is('/') ? 'color: #CCFF00; font-weight: 700;' : 'color: #d1d5db;' }}">
@@ -75,19 +63,33 @@
                 @endauth
             </div>
 
-            <!-- Right Actions: Search, Notifications, Avatar & Auth -->
-            <div class="flex items-center" style="gap: 1.25rem;">
+            <!-- Right Actions: Dark Mode, Search, Notifications, Avatar & Auth (Hidden on Mobile) -->
+            <div class="hidden lg:flex items-center" style="gap: 1.25rem;">
+                <!-- Dark Mode Toggle Button -->
+                <button @click="darkMode = !darkMode"
+                    class="p-2 rounded-lg bg-gray-800 text-gray-200 hover:bg-gray-700 focus:outline-none transition-colors cursor-pointer">
+                    <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+                </button>
+
                 @auth
                     <!-- Notification Bell Icon -->
                     <button type="button"
-                        class="text-gray-300 hover:text-white transition-colors focus:outline-none flex-shrink-0">
+                        class="text-gray-300 hover:text-white transition-colors focus:outline-none flex-shrink-0 cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                     </button>
 
-                    <!-- Search Input Field with Properly Styled Icon -->
+                    <!-- Search Input Field -->
                     <div class="relative flex-shrink-0 flex items-center">
                         <span class="absolute left-3 flex items-center pointer-events-none text-gray-400">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -115,7 +117,6 @@
                             @endif
                         </a>
 
-                        <!-- Logout Button -->
                         <form method="POST" action="{{ route('logout') }}" class="inline flex-shrink-0">
                             @csrf
                             <button type="submit"
@@ -136,6 +137,92 @@
                 @endauth
             </div>
 
+            <!-- Mobile & Tablet Controls (Dark Mode Toggle + Hamburger Menu Button) -->
+            <div class="flex items-center lg:hidden" style="gap: 0.75rem;">
+                <button @click="darkMode = !darkMode"
+                    class="p-2 rounded-lg bg-gray-800 text-gray-200 hover:bg-gray-700 focus:outline-none transition-colors cursor-pointer">
+                    <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+                </button>
+                <button @click="open = !open"
+                    class="p-2 rounded-lg text-gray-300 hover:bg-gray-800 focus:outline-none cursor-pointer">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
         </div>
+    </div>
+
+    <!-- Mobile Dropdown Drawer Menu -->
+    <div x-show="open" style="background-color: #000000; border-color: #1f2937;"
+        class="lg:hidden border-t px-4 pt-4 pb-6 space-y-3 shadow-xl">
+        @auth
+            @if(auth()->user()->isOrganizer())
+                <a href="{{ route('organizer.dashboard') }}" class="block text-sm font-bold uppercase py-1.5"
+                    style="{{ request()->routeIs('organizer.*') ? 'color: #CCFF00;' : 'color: #d1d5db;' }}">
+                    Discover
+                </a>
+            @endif
+            <a href="{{ route('events.index') }}" class="block text-sm font-medium py-1.5"
+                style="{{ request()->routeIs('events.*') || request()->is('/') ? 'color: #CCFF00;' : 'color: #d1d5db;' }}">
+                Events
+            </a>
+            <a href="#" class="block text-sm font-medium py-1.5"
+                style="{{ request()->routeIs('communities.*') ? 'color: #CCFF00;' : 'color: #d1d5db;' }}">
+                Communities
+            </a>
+            <a href="{{ route('profile.index') }}" class="block text-sm font-medium py-1.5"
+                style="{{ request()->routeIs('profile.*') ? 'color: #CCFF00;' : 'color: #d1d5db;' }}">
+                My Profile
+            </a>
+
+            <div class="border-t border-gray-800 pt-3 mt-3 flex flex-col gap-2.5">
+                <div class="text-xs font-bold text-gray-400 uppercase truncate">Account: {{ auth()->user()->name }}</div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="w-full text-center bg-gray-900 text-red-400 text-xs font-bold uppercase px-3 py-2.5 rounded-lg border border-gray-800 cursor-pointer">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        @else
+            <a href="{{ route('events.index') }}" class="block text-sm font-medium py-1.5"
+                style="{{ request()->routeIs('events.*') || request()->is('/') ? 'color: #CCFF00;' : 'color: #d1d5db;' }}">
+                Discover
+            </a>
+            <a href="#how-it-works" class="block text-sm font-medium text-gray-300 py-1.5">
+                How it Works
+            </a>
+            <a href="#" class="block text-sm font-medium text-gray-300 py-1.5">
+                Find Communities
+            </a>
+            <a href="#about" class="block text-sm font-medium text-gray-300 py-1.5">
+                About Us
+            </a>
+
+            <div class="border-t border-gray-800 pt-3 mt-3 flex flex-col gap-2">
+                <a href="{{ route('login') }}"
+                    class="block text-center text-xs font-bold uppercase text-gray-300 py-2.5 bg-gray-900 rounded-lg border border-gray-800">
+                    Sign In
+                </a>
+                <a href="{{ route('register') }}" style="background-color: #CCFF00; color: #000000;"
+                    class="block text-center text-xs font-extrabold uppercase py-2.5 rounded-lg tracking-wide">
+                    JOIN FREE
+                </a>
+            </div>
+        @endauth
     </div>
 </nav>

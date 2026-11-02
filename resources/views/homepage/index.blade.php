@@ -145,7 +145,7 @@
                     <span class="text-[11px] font-bold text-[#ccff00] uppercase tracking-widest block">LIVE ACTION</span>
                     <h2 class="text-2xl font-black uppercase italic text-white mt-1">UPCOMING EVENTS IN BROOKLYN</h2>
                 </div>
-                <form method="GET" action="{{ route('events.index') }}" class="flex items-center gap-2 w-full md:w-auto">
+                <form method="GET" action="{{ route('homepage.index') }}" class="flex items-center gap-2 w-full md:w-auto">
                     <input type="text" name="search" placeholder="Search event or location..." value="{{ request('search') }}" class="bg-[#111827] border border-gray-700 text-xs rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-[#ccff00]">
                     <button type="submit" class="bg-[#ccff00] text-black text-xs font-bold uppercase px-4 py-2 rounded-xl hover:bg-[#b3e600] transition-colors">
                         Filter

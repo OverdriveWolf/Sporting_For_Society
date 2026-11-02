@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Event;
+use App\Models\Category;
+use Illuminate\Http\Request;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -15,8 +18,22 @@ use App\Http\Controllers\OrganizerDashboardController;
 */
 Route::get('/', [EventController::class, 'index'])->name('events.index');
 
-Route::get('/homepage', function () {
-    return view('homepage.index');
+Route::get('/homepage', function (Request $request) {
+    $query = Event::with(['category', 'participants']);
+
+    // Apply search filter if a search term is entered
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+                ->orWhere('location', 'like', "%{$search}%");
+        });
+    }
+
+    $events = $query->latest()->take(6)->get();
+    $categories = Category::all();
+
+    return view('homepage.index', compact('events', 'categories'));
 })->name('homepage.index');
 /*
 |--------------------------------------------------------------------------

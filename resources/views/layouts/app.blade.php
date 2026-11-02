@@ -17,26 +17,30 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col justify-between transition-colors duration-200">
+<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col justify-between transition-colors duration-200 overflow-x-hidden">
 
     <!-- Navigation Header (Hidden on login/register route) -->
     @unless(request()->routeIs('login') || request()->routeIs('register'))
-        <header class="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">
+        <header class="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200 sticky top-0 z-50 w-full">
             @include('layouts.navbar')
         </header>
     @endunless
 
-    <!-- Global Alert / Session Flash Messages (REQ-10) -->
-    <main class="w-full flex-grow">
-        @if (session('success'))
-            <div class="mb-4 p-4 text-sm text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-950 rounded-lg" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
+    <!-- Global Main Content Wrapper with Responsive Multi-Device Constraints -->
+    <main class="w-full flex-grow mx-auto px-3 sm:px-6 lg:px-8 max-w-7xl py-4 sm:py-6">
+        @if (session('success') || session('error'))
+            <div class="mb-6">
+                @if (session('success'))
+                    <div class="p-4 text-sm text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-950 rounded-xl shadow-sm border border-green-200 dark:border-green-800" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-        @if (session('error'))
-            <div class="mb-4 p-4 text-sm text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-950 rounded-lg" role="alert">
-                {{ session('error') }}
+                @if (session('error'))
+                    <div class="p-4 text-sm text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-950 rounded-xl shadow-sm border border-red-200 dark:border-red-800" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
             </div>
         @endif
 
@@ -45,8 +49,10 @@
 
     <!-- Global Footer -->
     @unless(request()->routeIs('login') || request()->routeIs('register'))
-    <footer class="bg-gray-800 dark:bg-gray-950 text-white text-center py-4 mt-0 transition-colors duration-200">
-        <p class="text-sm">&copy; {{ date('Y') }} Sporting for Society. All rights reserved.</p>
+    <footer class="bg-gray-800 dark:bg-gray-950 text-white py-6 mt-12 transition-colors duration-200 border-t border-gray-700/50 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-xs sm:text-sm text-gray-400">&copy; {{ date('Y') }} Sporting for Society. All rights reserved.</p>
+        </div>
     </footer>
     @endunless
 

@@ -74,7 +74,7 @@
                     </a>
                 </div>
 
-                <!-- Tab Switcher (Forced equal spacing via width: 50% on each button) -->
+                <!-- Tab Switcher -->
                 <div
                     style="display: flex; background-color: #f3f4f6; padding: 4px; border-radius: 12px; margin-bottom: 24px; font-size: 12px; font-weight: bold; width: 100%; box-sizing: border-box;">
                     <button type="button" @click="tab = 'login'"
@@ -101,7 +101,7 @@
                                 Address</label>
                             <input type="email" id="login-email" name="email" value="{{ old('email') }}" required autofocus
                                 placeholder="alex.jones@domain.com"
-                                style="width: 100%; padding: 11px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none;">
+                                style="width: 100%; padding: 11px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none; color: #111827; color-scheme: light;">
                             @error('email') <span
                                 style="color: #ef4444; font-size: 11px; margin-top: 4px; display: block;">{{ $message }}</span>
                             @enderror
@@ -111,7 +111,7 @@
                             <label for="login-password"
                                 style="display: block; font-size: 10px; font-weight: 800; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Password</label>
                             <input type="password" id="login-password" name="password" required placeholder="••••••••••••"
-                                style="width: 100%; padding: 11px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none;">
+                                style="width: 100%; padding: 11px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none; color: #111827; color-scheme: light;">
                             @error('password') <span
                                 style="color: #ef4444; font-size: 11px; margin-top: 4px; display: block;">{{ $message }}</span>
                             @enderror
@@ -150,7 +150,7 @@
                                 Name</label>
                             <input type="text" id="register-name" name="name" value="{{ old('name') }}" required
                                 placeholder="Alex Jones"
-                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none;">
+                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none; color: #111827; color-scheme: light;">
                             @error('name') <span
                                 style="color: #ef4444; font-size: 11px; margin-top: 4px; display: block;">{{ $message }}</span>
                             @enderror
@@ -162,7 +162,7 @@
                                 Address</label>
                             <input type="email" id="register-email" name="email" value="{{ old('email') }}" required
                                 placeholder="alex.jones@domain.com"
-                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none;">
+                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none; color: #111827; color-scheme: light;">
                             @error('email') <span
                                 style="color: #ef4444; font-size: 11px; margin-top: 4px; display: block;">{{ $message }}</span>
                             @enderror
@@ -173,7 +173,7 @@
                                 style="display: block; font-size: 10px; font-weight: 800; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Password</label>
                             <input type="password" id="register-password" name="password" required
                                 placeholder="••••••••••••"
-                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none;">
+                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none; color: #111827; color-scheme: light;">
                             @error('password') <span
                                 style="color: #ef4444; font-size: 11px; margin-top: 4px; display: block;">{{ $message }}</span>
                             @enderror
@@ -185,7 +185,7 @@
                                 Password</label>
                             <input type="password" id="password_confirmation" name="password_confirmation" required
                                 placeholder="••••••••••••"
-                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none;">
+                                style="width: 100%; padding: 10px 14px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; box-sizing: border-box; outline: none; color: #111827; color-scheme: light;">
                         </div>
 
                         <button type="submit"
